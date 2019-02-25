@@ -1,0 +1,76 @@
+public class LoginMultiClient {
+	public static void main(String[] args) throws UnknownHostException, IOException {
+		//创建客户端
+		System.out.println("-----Client-----");
+		BufferedReader console = new BufferedReader(new InputStreamReader(System.in));
+		System.out.println("请输入用户名");
+		String uname = console.readLine();
+		System.out.println("请输入密码");
+		String upass = console.readLine();
+		
+		//1、建立链接：指定端口Socket创建客户端+服务的地址和端口
+		Socket client = new Socket("localhost",8888);
+		//2、操作：输入输出流操作
+		new Sand(client).sand("uname:"+uname+"&upass:"+upass);
+		String data = new Receive(client).receive();
+		System.out.println(data);
+		
+		
+		//3、释放资源
+		//dos.close();
+		client.close();
+	}
+	
+	//发送类
+	static class Sand
+	{
+		private Socket client;
+		private DataOutputStream dos;
+		public Sand(Socket client) {
+			this.client = client;
+			try {
+				dos = new DataOutputStream(client.getOutputStream());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		//发送数据
+		public void sand(String meg) {
+			try {
+				dos.writeUTF(meg);
+				dos.flush();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+		}
+		
+	}
+	
+	//接收数据类
+	static class Receive{
+		private Socket client;
+		private DataInputStream dis;
+		public Receive(Socket client) {
+			this.client = client;
+			try {
+				dis = new DataInputStream(client.getInputStream());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		//得到数据
+		public String receive() {
+			String requ = "";
+			try {
+				requ = dis.readUTF();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			return requ;
+		}
+		
+	}
+}
