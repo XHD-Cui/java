@@ -1,0 +1,675 @@
+类 每个首字母大写
+
+
+	instanceof
+多态
+	同一个类型的多个示例，调用同一个方法，出现的多种形态  就是“多态”。
+
+
+	向上转型
+		子类对象可以直接赋值给父类变量
+		自动完成
+	向下转型
+		父类变量赋值给子类变量
+		强制转型
+		（类型）变量名
+
+	初始化块
+		实例化初始化块
+			无static
+			实例初始化块是假象，一个类在编译后，实例化初始化块会消失。
+			--实例化初始化块的代码会被还原每个构造器的所有代码
+
+		类初始化块
+			有static
+
+	javap -c 
+
+包装类
+	byte = Byte
+	short = Short
+	int = Integer
+	long = Long
+	float = Float
+	double = Double
+	char = Character
+	boolean = Boolean
+
+	自动装箱
+	自动拆箱
+	建议使用包装类来声明变量
+包装类方法
+	parse（类型）
+
+两个要重写的方法
+	toString()
+
+	equals()
+	Object类提供了一个equals()方法来比较两个对象的内容是否相同，因此我们可以采用这个方法去比较两个对象是否在逻辑上“相等”
+static 静态
+	修饰类成员
+	实例对象可以调用static成员，
+	static成员不能调用非static成员
+
+final (类似于常量,不可以被重新赋值)；
+	必须指定初始值。
+	类变量  	定义指定  类初始化块指定
+	实例变量 	定义指定  实例初始化块  构造器
+	局部变量	定义指定
+final 类
+	不能被继承
+final
+	可以被重载，不能被重写。
+	final  private 有点多余。
+
+abstract (抽象类)
+	作用：派生子类
+	必须有构造器
+	不能被实例化
+	抽象类可以没有抽象借口
+		
+抽象方法
+	抽象方法不能有方法体。只有抽象类才可以有抽象方法，一定要被子类重写 @Override
+	要么子类也要是抽象类
+
+接口
+	没有初始化块和构造器
+[修饰符] interface 接口名 extends 父接口1,父接口2,...
+{
+	接口中的变量会被隐式地指定为public static final变量
+	int MAX = 100;
+	而方法会被隐式地指定为public abstract方法
+	void tet();
+	default void test(){
+
+	}
+}
+
+class 类名 extends 父类 implements 接口1,接口2,...
+{
+	
+}
+
+内部类
+	内部类 - 寄生类
+	外部类 - 宿主类
+	public class 类名
+	{
+		private class 内部类名
+		{
+
+		}
+	}
+	有static 修饰的内部类属于外部类本身
+	没有static修饰的内部类，属于外部类的实例
+内部类一个好处
+	他可以直接访问外部类的private成员（field / 方法 / 构造器）
+	内部类访问外部类成员，默认省略了 外部类类名.this.成员
+	非静态内部类，也属于非静态成员，寄生在“外部类”的类本身
+外部类不可以直接访问内部类的成员
+静态内部类
+	不能访问外部类的非静态成员(field / 方法)
+使用内部类
+	1、定义变量			2、定义方法			3、访问它的类Field/类方法
+	A、如果在外部类的里面，使用内部类
+		并没有太多需要注意的地方
+
+	B、在外部类的外面，使用内部类。
+		非静态内部类
+		内部类生成的文件名 外部类$内部类.class
+		声明变量
+			外部类.内部类 变量名
+		创建非静态内部类实例
+			 必须先创建宿主 (创建外部类实例)
+			 	接下来 用 宿主.new 外部类构造器();
+			 外部类.内部类 变量名 = new 外部类().new 内部类();
+			 非静态类继承
+			 class 类名 extends 宿主.内部类
+			 {
+			 	public 类名(宿主 宿主){
+			 		宿主.super();
+			 	}
+			 }
+		内部静态类 所以一般不需要程序员
+			宿主.内部静态类 变量 = new 宿主.内部静态类();
+			变量.field;
+			变量.方法();
+		继承
+			class 类名 extends 宿主.静态内部部类
+	局部内部类
+		局部内部类，只能在局部使用
+		不能使用static修饰
+	匿名内部类
+		必须显示继承一个父类
+		必须实现接口或者抽象类
+枚举
+	//用于代表“实例已经固定”的类
+
+	修饰符 enum 枚举名
+	{
+		//立即在第一行列出改枚举的所有实例（创建实例，如果有构造器 枚举实例（构造器参数））
+	}
+	修饰符 public | 不写， abstract | final (默认是final)
+	所有的枚举都有一个values的方法，该方法返回所有的枚举实例
+
+	switch(byte|short|int|String|枚举)
+	{
+		case NAME:
+			System.out.println();
+		break;
+	}
+	可以有field，方法，构造器（私有private，不写等于默认），初始化块，内部类
+有抽象方法的枚举类
+	如果该枚举类有抽象方法，那么该枚举类默认就是abstract
+	在实例化时
+	实例化(){
+		实现抽象方法
+	},
+枚举类实现接口
+	A。实现接口，并实现所有的抽奖方法。
+	B。参考实现抽象方法
+
+jar命令
+	把多个文件打包成一个压缩包 和winzip的格式是一样的。
+	默认多一个META-INF的文件夹，包含一个Manifest.mf的文件
+		通常压缩包
+		*.jar - 它里面包括的是N个class文件
+		*.war（web） - 他是一个web应用打包生成的包
+		*.ear （Enterprise）- 它是一个企业的
+java的入口文件
+	public --系统来调用该方法时
+	static 
+	main
+	String[] 默认长度为0
+			java 类名 第一个数组元素 第二个数组元素。。。
+获取用户的键盘输入
+	System.in代表键盘
+	通长进行包装
+	a。
+	b。Scanner
+系统相关的两个类
+	System
+		代表jvm所在的操作平台
+		获取操作平台相关的，用System
+		in      --代表标准输入，代表键盘
+		out     --标准输出，代表屏幕
+		exit	--退出虚拟机 
+
+		getenv	--获取所有的环境变量
+		getenv(String name) --获取环境变量的值
+		getProperties --获取所有的系统属性
+		getProperty(String name) --获取所有的系统属性的值
+	Runtime
+		代表虚拟机jre
+			JRE = jvm+核心类库
+		获取jvm虚拟机相关的，用Runtime
+		典型的单例类
+		它的构造器被隐藏了，只能通过getRuntime()方法获取实例。
+		运行操作系统已有的命令
+		rc.exec();
+
+异常	Exception 
+		try{
+
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+
+容器  Collection
+	
+	泛型 class<K,V,E> 变量名 = new clsss<>();
+
+	方法
+	size();	返回长度
+	isEmpty();是否为空
+	remove(); 移除
+	clear();清空
+	list  有序，类似于数组
+		ArrayList
+			add();添加
+
+	set   无序，不可重复
+		HashSet
+			add();添加
+		TreeSet
+			自动排序的Set
+				Comparable接口
+	map		键值对（K,V）类型不限
+		HashMap
+			如果KEY一样,VALUE就会被改变
+			put();添加
+			get();得到
+
+		TreeMap
+			自动排序的Map
+				Comparable接口
+
+	迭代器 如果涉及到元素的删除或者改变，建议用迭代器
+		for (Iterator<String> iter = aList.iterator(); iter.hasNext();) {
+            String temp = iter.next();
+            System.out.print(temp + "\t");
+            if (temp.endsWith("3")) {// 删除3结尾的字符串
+                iter.remove();
+            }
+        }
+        public class Test {
+			    public static void main(String[] args) {
+			        List<String> aList = new ArrayList<String>();
+			        for (int i = 0; i < 5; i++) {
+			            aList.add("a" + i);
+			        }
+			        System.out.println(aList);
+			        for (Iterator<String> iter = aList.iterator(); iter.hasNext();) {
+			            String temp = iter.next();
+			            System.out.print(temp + "\t");
+			            if (temp.endsWith("3")) {// 删除3结尾的字符串
+			                iter.remove();
+			            }
+			        }
+			        System.out.println();
+			        System.out.println(aList);
+			    }
+		}
+		迭代器遍历Map一
+		public class Test {
+		    public static void main(String[] args) {
+		        Map<String, String> map = new HashMap<String, String>();
+		        map.put("A", "高淇");
+		        map.put("B", "高小七");
+		        Set<Entry<String, String>> ss = map.entrySet();
+		        for (Iterator<Entry<String, String>> iterator = ss.iterator(); iterator.hasNext();) {
+		            Entry<String, String> e = iterator.next();
+		            System.out.println(e.getKey() + "--" + e.getValue());
+		        }
+		    }
+		}
+		迭代器遍历Map二
+		public class Test {
+		    public static void main(String[] args) {
+		        Map<String, String> map = new HashMap<String, String>();
+		        map.put("A", "高淇");
+		        map.put("B", "高小七");
+		        Set<String> ss = map.keySet();
+		        for (Iterator<String> iterator = ss.iterator(); iterator.hasNext();) {
+		            String key = iterator.next();
+		            System.out.println(key + "--" + map.get(key));
+		        }
+		    }
+		}
+		遍历Map方法一：根据key获取value
+		Map<Integer, Man> maps = new HashMap<Integer, Man>();
+			Set<Integer>  keySet =  maps.keySet();
+		for(Integer id : keySet){
+			System.out.println(maps.get(id).name);
+		}
+
+	Collections工具类
+		类 java.util.Collections 提供了对Set、List、Map进行排序、填充、查找元素的辅助方法。
+	      1. void sort(List) //对List容器内的元素排序，排序的规则是按照升序进行排序。
+	      2. void shuffle(List) //对List容器内的元素进行随机排列。
+	      3. void reverse(List) //对List容器内的元素进行逆续排列 。
+	      4. void fill(List, Object) //用一个特定的对象重写整个List容器。
+	      5. int binarySearch(List, Object)//对于顺序的List容器，采用折半查找的方法查找特定对象。
+
+
+IO流
+	文件操作
+	File src = new File("D:/eclipse-workspace/javasty/src/123.png");
+
+	getName();获得文件名
+	getPath();获得路径
+	src.getAbsolutePath();获得绝对路径
+
+	src.length();获得文件的长度
+
+	src.exists();//文件是否存在
+	src.isFile();//是否是文件
+	src.isDirectory();//是否是目录
+
+	createNewFile();创建新文件  不存在才创建并返回true，存在返回false
+	delete(); 删除文件
+
+	目录的操作
+	mkdir(); 创建目录
+	mkdirs(); 如果父目录不存在，一起创建
+
+	list();       //返回String  字符串文件名称
+	listFiles();  //返回File  文件对象
+
+	getBytes();//编码
+			   //解码
+			   	字节数组->字符串
+			   	byte[] car = new byte[3];
+				int len=-1;
+				while((len=fis.read(car)) != -1) {
+					String str = new String(car,0,len);
+					System.out.println(str);
+				}
+
+
+	创建源
+		File f1 = new File("abc.txt");
+	选择流
+		InputStream fis = new FileInputStream(f1);
+		OutputStream ot = new FileOutputStream(desc); //OutputStream ot = new FileOutputStream(desc,true); true代表追加
+			字节缓冲流
+				new BufferedInputStream
+				new BufferedOutputStream
+		文件字符输出流
+		Reader rd = new FileReader();
+		Writer wr = new FileWriter();
+			字符缓冲流
+				new BufferedReader
+				new BufferedWriter
+				//BufferedReader提供了更方便的readLine()方法，直接按行读取文本
+            	//br.readLine()方法的返回值是一个字符串对象，即文本中的一行内容
+		字节数组
+		ByteArrayInputStream
+		ByteArrayOutputStream
+
+		DataInputStream		按写入顺序读取
+		DataOutputStream
+
+		ObjectInputStream  java.io.Serializable    transient(改数据不需要序列化)
+		ObjectOutputStream
+
+		PrintStream
+		PrintWriter
+	操作
+		读取
+			int temp;
+			while((temp=fis.read()) != -1) {
+				System.out.println((char)temp);
+			}
+
+			！！！！  
+				read();
+				byte[] car = new byte[3];  //如果是字符就用 char[]
+				int len=-1;
+				while((len=fis.read(car)) != -1) {
+					String str = new String(car,0,len);
+					System.out.println(str);
+				}
+		写入
+			String str = "my name is cxy";
+			byte[] bt = str.getBytes();
+			ot.write(bt, 0, bt.length); //字符有append
+			ot.flush();
+
+	释放
+		fis.close();
+
+	
+
+
+		http://commons.apache.org
+		导入commons包
+
+		FileUtils.sizeOf();
+
+		FileUtils.listFiles();   EmptyFileFilter.NOT_EMPTY  代表空文件   DirectoryFileFilter.INSTANCE   文件   FileFilterUtils.or( new SuffixFilefilter("文件后缀"),new SuffixFilefilter("文件后缀"));
+
+		FileUtils.readFileToString() //读取文件
+
+		List<String> megs = FileUtils.readLines() //逐行读取
+
+		FileUtils.write(new File("cxyWrite.txt"), "学习痛苦一时，不学痛苦一世！","UTF-8",true); //写人文件
+		FileUtils.writeStringToFile(new File("cxyWrite.txt"), "学习痛苦一时，不学痛苦一世！","UTF-8",true);
+		FileUtils.writeByteArrayToFile(new File("cxyWrite.txt"), "努力，奋斗！".getBytes("UTF-8"),true);
+
+		FileUtils.copyFile(new File("slogo.jpg"), new File("logoCopy.jpg")); //文件拷贝
+		FileUtils.copyFileToDirectory(new File("slogo.jpg"), new File("lib")); //拷贝文件到目录
+
+		FileUtils.copyDirectoryToDirectory(new File("lib"), new File("lib2"));//拷贝目录到目录
+		FileUtils.copyDirectory(new File("lib"), new File("lib2"));  //拷贝目录内容到目录
+
+		String uri = "https://www.lxxxjs.cn/lxxxjs/gw/public/static/img/bj/bj2.jpg"; 
+		FileUtils.copyURLToFile(new URL(uri), new File("bj2.jpg"));   //拷贝网络图片到目录
+		String datas = IOUtils.toString(new URL("https://www.baidu.com"),"utf-8"); //拷贝网络
+		System.out.println(datas); 
+
+线程
+
+	实现线程的三种方式
+		1、继承Thread 
+		2、实现Runnable   
+							实现run()方法  
+						new Thread().start();
+						new Thread(new RunTh01()).start();
+			多实现少继承 避免单继承
+
+
+
+
+		3、实现Callable接口
+						重新call()方法
+
+		Thread类
+			Thread(Runnable target, String name) 分配新的 Thread 对象。
+					currentThread() // 返回对当前正在执行的线程对象的引用。
+					getName() //返回该线程的名称
+			Thread.currentThread().getName()
+			Boolean isAlive(); //判断线程时候还活着，是否已经终止
+
+
+	线程阻塞
+			sleep	
+				Thread.sleep(200); //抱着线程休息多少秒 一般用于模拟网络延时  
+			yield 礼让
+				Thread.yield();
+			join 插队
+				Thread 对象.join();
+	线程状态
+			State st = Thread对象.getState();
+			NEW    RUNNBLE   TIMED1_WAITING    TERMINTED
+			新建    运行       阻塞				结束状态
+
+			Thread.state.TERMINTED  线程是结束状态
+			Thread.activeCount();  线程的数量
+
+			优先级
+			Thread.MIN_PRIORITY = 1
+			Thread.MAX_PRIORITY = 10
+			Thread.NORM_PRIORITY = 5
+				Thread.currentThread().
+				int getPriority();
+				Thread对象.
+				void setPriority( int newPriority);
+				优先级设置要在start();前调用
+
+			deamon 守护线程
+				默认都是用户线程
+				setDeamon(true); //将用户线程更改为守护线程
+	并发
+		线程安全与线程不安全
+			一般只是读取数据 可以采用线程不安全。
+			如果涉及到修改数据。尽量采用线程安全
+		锁机制
+			synchronized
+			同步方法和同步快
+				如果需要锁定this对象，在相应的方法上 加上synchronized
+			同步块 （同步监视器）
+				synchronized(对象){
+					代码体
+				}
+				目标更明确
+			操作并发容器
+				CopyOnWriteArrayList
+			协作
+				wait(); //线程阻塞，但不占有
+				notifyAll();//唤醒所有
+				notify(); //唤醒
+	Timer 定时器
+		Timer 
+			schedule(new TimerTask);
+												多少秒后执行，每隔多少秒后执行
+			timer.schedule(new MyTimerTest(), 1000,5000);
+		TimerTask   //是一个抽象类
+ 			实现run();
+ 	quarts
+ 		Scheduler  调度器
+ 		Trigger   触发条件
+ 		JobDetail 需要处理的Job
+ 		Job   执行逻辑
+ 	volatile
+ 		保证线程间变量的可见性
+ 	ThreadLocal  每个线程自身的存储区域，局部区域
+ 				一般用 private static 修饰
+ 				private static ThreadLocal<Integer> tl = new ThreadLocal<>();
+ 				private static ThreadLocal<Integer> tl = new ThreadLocal<>(){
+ 					protected Integetr initialVlue(){
+ 						return 200;
+ 					}
+ 				};																  lambda
+ 				private static ThreadLocal<Integer> tl = ThreadLocal.withInitial(()->200);
+ 				tl.get();
+ 			!!!Thread.run 里面的归子线程，其他方法归mian线程
+ 			线程上下文，InheritableThreadLocal<>
+ 		get
+ 		set
+ 		initialVlue
+
+	lambda
+		静态内部类
+
+		局部内部类
+
+		匿名内部类
+
+		()->{
+			方法体
+		}
+
+		如果 方法体只有一个 return
+		()->a+b
+		()->{return a+b;}
+
+
+Swing 窗口
+							object
+
+		Component         					MenuComponent
+
+button TextField  Container					MenuItem     MenuBar
+
+
+	1.在添加界面组件之前，先要有容器
+	2.把界面组件按在某个固定的位置
+
+						Component
+
+			Window  		Panel		ScrollPane
+		
+		Frame	Dialog	    Applet
+
+	布局管理器
+	
+
+
+
+
+	网络编程
+		常用类操作
+			java.net
+		IP
+			InetAddress
+				getHostAddress();
+				getHostName(); //
+				getByName();
+		端口冲突 0-65535
+			netstat -ano
+			netstat -aon|findstr "端口"
+			tasklist|findstr "pid"
+			InetSocketAddress socketAddress = new InetSocketAddress("127.0.0.1", 8080);
+	        InetSocketAddress socketAddress2 = new InetSocketAddress("localhost", 9000);
+	        System.out.println(socketAddress.getHostName());
+	        System.out.println(socketAddress2.getAddress());
+	    URL
+	    	URL u = new URL("http://www.google.cn:80/webhp#aa?canhu=33");
+	        System.out.println("获取与此url关联的协议的默认端口：" + u.getDefaultPort());
+	        System.out.println("getFile:" + u.getFile()); // 端口号后面的内容
+	        System.out.println("主机名：" + u.getHost()); // www.google.cn
+	        System.out.println("路径：" + u.getPath()); // 端口号后，参数前的内容
+	        // 如果www.google.cn:80则返回80.否则返回-1
+	        System.out.println("端口：" + u.getPort()); 
+	        System.out.println("协议：" + u.getProtocol());
+	        System.out.println("参数部分：" + u.getQuery());
+	        System.out.println("锚点：" + u.getRef());
+	 
+	        URL u1 = new URL("http://www.abc.com/aa/");
+	        URL u2 = new URL(u, "2.html"); // 相对路径构建url对象
+	        System.out.println(u2.toString()); // http://www.abc.com/aa/2.html
+	    UDP
+				DatagramPacket
+				DatagramSocet
+							receive
+							sand
+			基本操作步骤
+				接收端
+					1、使用DatagramSocket 指定端口 创建接收端
+					2、准备容器 封装成DatagramPacket
+					3、阻塞式接受包裹receive(DatagramPacket p);
+					4、分析数据
+						byte[] getData()
+								getLength()
+					5、释放资源
+				发送端
+					1、使用DatagramSocket 指定端口 创建发送端
+					2、准备数据 一定转成字节数组
+					3、准备容器 封装成DatagramPacket包裹 指定目的地
+					4、发送包裹send(DatagramPacket p);
+					5、释放资源
+		TCP
+			基本步骤
+				创建服务器
+					1、指定端口 ServerSocket创建服务器
+					2、阻塞式等待联系 accept
+					3、操作：输入输出流操作
+					4、释放资源
+				创建客户端
+					1、创建Socket链接 Socket
+					2、操作：输入输出流
+					3、释放资源
+
+反射（Reflex）
+	把Java类中的各种结构（属性，方法，构造器，类名）映射成一个个对象
+		1、获取Class 对象 注意C大写
+			a、对象.getClass();
+			b、类.class();
+			3、Class.forName("包名.类名");
+		2、创建对象
+			获取的Class对象.getConstructor().newInstance();
+XML解析
+	开始解析文档
+	propers-->解析开始
+	内容为空
+	proper-->解析开始
+	内容为空
+	name-->解析开始
+	内容为cuixiaoyu
+	name<--解析结束
+	内容为空
+	age-->解析开始
+	内容为18
+	age<--解析结束
+	内容为空
+	proper<--解析结束
+	内容为空
+	propers<--解析结束
+	结束解析文档
+
+注解
+	    @Oevrride   表示重载
+
+	    @Deprecated 表示废弃
+
+	    @SuppressWarnings() 压制警告，类似于PHP代码语句前的@
+
+
+
+
+JavaWeb
+	
+	<% 代码 %> //相当于一个方法   
+	<%!  成员属性   %> //相当于成员属性，用于网站计数，非常方便   定义表达式
+	<%=  字符串或者方法  %> //内容输入表达式
