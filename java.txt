@@ -639,6 +639,27 @@ button TextField  Container					MenuItem     MenuBar
 			3、Class.forName("包名.类名");
 		2、创建对象
 			获取的Class对象.getConstructor().newInstance();
+
+			Class<User> c  = (Class<User>) Class.forName(path);
+			调用有参数的构造器
+			User user = c.getConstructor(int.class,String.class,int.class).newInstance(1001,"cuixiaoyu",18);
+		3、Class.getDeclaredFields() //获取所有的Field（属性）
+		   Class.getDeclaredMethods() //获取所有的Method（方法）
+		   c.getDeclaredConstructors(); //获取所有的构造器
+		4、通过反射API调用普通方法
+			Class clazz = Class.getConstructor()
+			对象名 实例对象 =  class.newInstance();
+			Method method = clazz.getDeclaredMethod(方法名，参数类型.class);
+			method.incoke(实例对象,参数);
+			实例对象.方法();
+		5、通过反射API操作属性
+			//通过反射API调用属性
+			User u1 = clazz.getConstructor().newInstance();
+			Field f = clazz.getDeclaredField("id");
+			f.setAccessible(true);
+			f.set(u1,1002);
+			System.out.println(u1.getId());
+
 XML解析
 	开始解析文档
 	propers-->解析开始
